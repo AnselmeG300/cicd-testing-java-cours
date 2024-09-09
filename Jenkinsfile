@@ -18,10 +18,12 @@ node {
         }
 
         stage('Build') {
+            sh "ls -a"
             sh "mvn clean package -D skipTests"
         }
 
         stage('Test') {
+            sh "ls -a"
             sh "mvn test"
         }
 
