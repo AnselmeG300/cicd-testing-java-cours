@@ -18,7 +18,7 @@ node {
         }
 
         stage('Build with test') {
-
+            sh "mvn --version"
             sh "mvn clean install"
         }
 
