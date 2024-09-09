@@ -18,6 +18,7 @@ node {
         }
 
         stage('Build') {
+            sh "mvn --version"
             sh "ls -a"
             sh "mvn clean package -D skipTests"
         }
