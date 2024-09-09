@@ -17,14 +17,17 @@ node {
             checkout scm
         }
 
-        stage('Build with test') {
-            sh "ls -a"
-            sh "mvn clean install"
+        stage('Build') {
+            sh "mvn clean package -D skipTests"
+        }
+
+        stage('Test') {
+            sh "mvn test"
         }
 
         stage('Sonarqube Analysis') {
             withSonarQubeEnv('SonarQubeLocalServer') {
-                sh " mvn sonar:sonar -Dintegration-tests.skip=true -Dmaven.test.failure.ignore=true"
+                sh "mvn sonar:sonar -Dintegration-tests.skip=true -Dmaven.test.failure.ignore=true"
             }
             timeout(time: 1, unit: 'MINUTES') {
                 def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
